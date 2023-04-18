@@ -2,6 +2,7 @@
 import { MdWallpaper, MdOutlineFamilyRestroom } from "react-icons/md"
 import { FaHandPointRight } from "react-icons/fa"
 import { BsArrowDownCircleFill, BsArrowUpCircleFill, BsBookmarkCheck, BsCardChecklist } from "react-icons/bs"
+import SignOut from "@/components/login/sign-out";
 
 
 import MenuPadSlide from "@/components/caps/menuPad";
@@ -141,6 +142,9 @@ export default function Caps(){
           </div>
         </div>
       </MenuPadSlide>
+      <div className="mt-8 mx-auto">
+        <SignOut/>
+      </div>
     </div>
   );
 }

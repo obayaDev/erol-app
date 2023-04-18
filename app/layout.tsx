@@ -16,7 +16,7 @@ export default function RootLayout(props:{children: React.ReactNode}) {
 
       <body className='flex flex-col h-screen py-2'>
         
-        <nav className='text-neutral-500 font-bold text-xs md:text-sm md:px-2 lg:text-base lg:px-4 mx-auto xl:max-w-none xl:ml-6 xl:mr-10 xl:text-lg max-w-2xl lg:max-w-none'>
+        <nav className='text-neutral-500 font-bold text-xs md:text-sm md:px-2 lg:text-base lg:px-4 xl:max-w-none xl:ml-6 xl:mr-10 xl:text-lg'>
           <div className='flex flex-nowrap items-center justify-between mx-auto tracking-wide'>
             <Link href="/" className='flex items-center min-w-fit'>
               <Image src={mainLogo} alt="Home" className='w-5 h-5 xl:w-8 xl:h-8'/>
