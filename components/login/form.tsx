@@ -40,7 +40,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
           });
         } else {
           if(e.currentTarget.code.value === "739234"){
-            fetch("/api/auth/register", {
+            fetch("/api/auth/registerSleep", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
               }
             });
           }else if(e.currentTarget.code.value === "937461"){
-            fetch("/api/auth/register", {
+            fetch("/api/auth/registerSleep", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
