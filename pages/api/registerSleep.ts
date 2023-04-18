@@ -1,4 +1,4 @@
-import prisma from "@/prisma/client";
+import prisma from "../../prisma/client";
 import { empty } from "@prisma/client/runtime";
 import { NextApiRequest, NextApiResponse } from "next";
 
