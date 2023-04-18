@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model branches {
+  id         BigInt @id @default(autoincrement()) @db.UnsignedBigInt
+  name       String @db.VarChar(255)
+  branch     String @db.VarChar(15)
+  year_in    Int    @db.Year
+  year_out   Int    @db.Year
+  image_path String @db.VarChar(255)
+}
+
+model childs {
+  id          BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  name        String  @db.VarChar(255)
+  second_name String  @db.VarChar(255)
+  third_name  String  @db.VarChar(255)
+  year_birth  Int     @db.Year
+  branch      String  @db.VarChar(15)
+  father_id   BigInt
+  mother_id   BigInt
+  absences    Int
+  still_in    Boolean
+}
+
+model events {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  date           DateTime @db.DateTime(0)
+  name           String   @db.VarChar(255)
+  text           String   @db.Text
+  branch         String   @db.VarChar(15)
+  type           String   @db.VarChar(25)
+  image_path     String   @db.VarChar(255)
+  uploaded_by_id BigInt
+  global         Boolean
+  past           Boolean
+  assistence     String   @db.LongText
+}
+
+model files {
+  id              BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  name            String   @db.VarChar(50)
+  text            String   @db.Text
+  branch          String   @db.VarChar(15)
+  max_update_date DateTime @db.Date
+  file_path       String   @db.VarChar(255)
+  uploaded_by_id  BigInt
+}
+
+model forms_sleep {
+  id              BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  name            String
+  firstName       String
+  email           String
+  phone           String
+  group           String
+  comments        String  @db.Text
+  capsQuatitiy    String
+  childQuatitiy   String
+  dateIn          DateTime
+  dateOut         DateTime
+  confirmed       Boolean
+  confirmed_by_id BigInt
+}
+
+model news {
+  id         BigInt @id @default(autoincrement()) @db.UnsignedBigInt
+  title      String @db.VarChar(255)
+  text       String @db.Text
+  image_path String @db.VarChar(255)
+  user_id    BigInt
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  firstName String
+  phone     String
+  email     String    @unique
+  password  String
+  role      String    @default("fam")
+  branch    String    
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
