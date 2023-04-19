@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "vercel build",
     "start": "next start",
-    "lint": "next lint",
-    "prebuild": "prisma generate",
-    "predev": "prisma generate",
-    "prisma:migrate": "prisma migrate deploy"
+    "lint": "next lint"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^0.4.4-canary.81",
