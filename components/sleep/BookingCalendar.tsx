@@ -5,7 +5,8 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 const rdrLocales = require('react-date-range/dist/locale');
-import { addDays, isWeekend } from 'date-fns';
+import { addDays, isWeekend, toDate } from 'date-fns';
+import LoadingDots from "@/components/login/loading-dots";
 
 export default function BookingCalendar(props:{setDateIn: Function, setDateOut: Function}) {
 
@@ -31,22 +32,35 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
     return dates;
   }
 
-  const disabledDates = calcWeekdays(new Date(), addDays(new Date(), 365))
-  const enabledDates = calcWeekends(new Date(), addDays(new Date(), 365))
-
-  const [startDate, setStartDate] = useState(enabledDates[0]);
-  const [endDate, setEndDate] = useState(enabledDates[1]);
+  const [loading, setLoading] = useState(true);
+  const [disabledDates, setDisabledDates] = useState(calcWeekdays(new Date(), addDays(new Date(), 365)));
+  const [enabledDates, setEnabledDates] = useState(calcWeekends(new Date(), addDays(new Date(), 365)));
 
   useEffect(() => {
     props.setDateIn(startDate);
     props.setDateOut(endDate);
+    fetch("/api/getSleepForms")
+    .then((res) => res.json())
+    .then((data) => {
+      const datesToRemove:Date[] = [];
+      data.forEach((sleepForm: { dateIn: Date, dateOut: Date}) => {
+        sleepForm.dateIn = new Date(sleepForm.dateIn);
+        sleepForm.dateOut = new Date(sleepForm.dateOut);
+        sleepForm.dateIn.setHours(0, 0);
+        sleepForm.dateOut.setHours(0, 0);
+        datesToRemove.push(sleepForm.dateIn);
+        datesToRemove.push(sleepForm.dateOut);
+      });
+
+      disabledDates.push(...datesToRemove);
+      disabledDates.sort((a, b) => a.getTime() - b.getTime());
+      console.log(disabledDates);
+      setLoading(false);
+    })
   }, []);
 
-  const selectionRange = {
-    startDate: startDate,
-    endDate: endDate,
-    key: 'Selection'
-  }
+  const [startDate, setStartDate] = useState(enabledDates[0]);
+  const [endDate, setEndDate] = useState(enabledDates[1]);
 
   const handleSelect = (ranges:any,) =>{
     setStartDate(ranges.Selection.startDate);
@@ -54,22 +68,36 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
     props.setDateIn(ranges.Selection.startDate);
     props.setDateOut(ranges.Selection.endDate);
   }
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: 'Selection'
+  }
   
   return (
       <div>
-        <DateRangePicker 
-          className="rounded-lg overflow-hidden" 
-          ranges={[selectionRange]} 
-          minDate={new Date()}
-          maxDate={addDays(new Date(), 365)}
-          locale={rdrLocales.es}
-          onChange={handleSelect}
-          moveRangeOnFirstSelection={true}
-          showDateDisplay={false}
-          staticRanges={[]}
-          inputRanges={[]}
-          disabledDates={disabledDates}
-        />
+        
+        {loading ? (
+          <div className="w-fit h-60 my-7 flex justify-center align-middle">
+            <LoadingDots color="#808080"/>
+        </div>
+        ) : (
+          <DateRangePicker
+            className={`${loading ? "opacity-0":""}rounded-lg overflow-hidden`}
+            ranges={[selectionRange]} 
+            minDate={new Date()}
+            maxDate={addDays(new Date(), 365)}
+            locale={rdrLocales.es}
+            onChange={handleSelect}
+            moveRangeOnFirstSelection={true}
+            showDateDisplay={false}
+            staticRanges={[]}
+            inputRanges={[]}
+            disabledDates={disabledDates}
+            
+          />
+        )}
       </div>
   );
 }
