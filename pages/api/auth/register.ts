@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-//import { hash } from "bcrypt";
+import { hash } from "bcrypt";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +22,7 @@ export default async function handler(
           firstName,
           phone,
           email,
-          password: password, //await hash(password, 10),
+          password: await hash(password, 10),
           role,
           branch
         },
