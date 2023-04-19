@@ -1,7 +1,7 @@
 import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/prisma/client";
-import { compare } from "bcrypt";
+//import { compare } from "bcrypt";
 
 export default NextAuth({
   providers: [
@@ -22,7 +22,7 @@ export default NextAuth({
           },
         });
         // if user doesn't exist or password doesn't match
-        if (!user || !(await compare(password, user.password))) {
+        if (!user || password !== user.password) {
           throw new Error("Invalid username or password");
         }
         return user;
