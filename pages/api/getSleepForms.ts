@@ -5,7 +5,7 @@ export default async function GetSleepForms(req:NextApiRequest ,res: NextApiResp
   try{
     const data = await prisma.forms_sleep.findMany({
       where:{
-        confirmed: false,
+        confirmed: true,
       },
       select:{
         dateIn: true,
