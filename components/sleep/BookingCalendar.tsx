@@ -79,12 +79,12 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
       <div>
         
         {loading ? (
-          <div className="w-fit h-60 my-7 flex justify-center align-middle">
+          <div className="w-fit h-72 my-0.5 flex justify-center align-middle">
             <LoadingDots color="#808080"/>
         </div>
         ) : (
           <DateRangePicker
-            className={`${loading ? "opacity-0":""}rounded-lg overflow-hidden`}
+            className={`rounded-lg overflow-hidden`}
             ranges={[selectionRange]} 
             minDate={new Date()}
             maxDate={addDays(new Date(), 365)}
