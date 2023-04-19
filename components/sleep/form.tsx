@@ -32,7 +32,7 @@ export default function SleepForm(){
           
             onSubmit={(e) => {
               e.preventDefault();
-
+              setLoading(true);
               addHourToDate(dateIn, e.currentTarget.timeIn.value);
               addHourToDate(dateOut, e.currentTarget.timeOut.value);
 
@@ -56,7 +56,7 @@ export default function SleepForm(){
               }).then(async (res) => {
                 setLoading(false);
                 if (res.status === 200) {
-                  toast.success("Reserva feta! Redireccionant a la pàgina principal");
+                  toast.success("Reserva feta!");
                 }else if(res.status === 400){
                   toast.error("Ja hi ha una reserva feta amb aquest correu")
                 }else {

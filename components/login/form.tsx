@@ -7,14 +7,6 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export function Register (type: String){
-  if(type === "register"){
-    <>
-      
-    </>
-  }
-}
-
 export default function Form({ type }: { type: "login" | "register" }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -40,7 +32,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
           });
         } else {
           if(e.currentTarget.code.value === "739234"){
-            fetch("/api/auth/registerSleep", {
+            fetch("/api/auth/register", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -66,7 +58,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
               }
             });
           }else if(e.currentTarget.code.value === "937461"){
-            fetch("/api/auth/registerSleep", {
+            fetch("/api/auth/register", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
