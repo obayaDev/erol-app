@@ -1,4 +1,4 @@
-import prisma from "../../prisma/client";
+import prisma from "@/prisma/client";
 import { empty } from "@prisma/client/runtime";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -6,15 +6,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {email, phone, name, firstName, group, comments, dateIn, dateOut, capsQuatitiy, childQuatitiy} = req.body;
+  const {email, phone, name, firstName, group, comments, dateIn, dateOut, capsQuatitiy, childQuatitiy} = req.body.data;
 
-  console.log(email)
   const exists = await prisma.forms_sleep.findMany({
     where: {
       email,
     },
   });
-  console.log(Object.keys(exists).length)
+
   if (Object.keys(exists).length !== 0) {
     res.status(400).send("User already exists");
   } else {

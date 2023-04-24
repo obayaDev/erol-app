@@ -8,7 +8,7 @@ const rdrLocales = require('react-date-range/dist/locale');
 import { addDays, isWeekend, toDate } from 'date-fns';
 import LoadingDots from "@/components/login/loading-dots";
 
-export default function BookingCalendar(props:{setDateIn: Function, setDateOut: Function}) {
+export default function SeeBookingCalendar() {
 
   function calcWeekdays(startDate:Date, endDate:Date) {
     var date  = startDate;
@@ -37,8 +37,6 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
   const [enabledDates, setEnabledDates] = useState(calcWeekends(new Date(), addDays(new Date(), 365)));
 
   useEffect(() => {
-    props.setDateIn(startDate);
-    props.setDateOut(endDate);
     fetch("/api/sleep/getSleepForms")
     .then((res) => res.json())
     .then((data) => {
@@ -64,8 +62,6 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
   const handleSelect = (ranges:any,) =>{
     setStartDate(ranges.Selection.startDate);
     setEndDate(ranges.Selection.endDate);
-    props.setDateIn(ranges.Selection.startDate);
-    props.setDateOut(ranges.Selection.endDate);
   }
 
   const selectionRange = {
@@ -78,12 +74,12 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
       <div>
         
         {loading ? (
-          <div className="w-fit h-72 my-0.5 flex justify-center align-middle">
+          <div className="h-72 w-80 mx-1.5 my-0.5 flex justify-center align-middle">
             <LoadingDots color="#808080"/>
         </div>
         ) : (
           <DateRangePicker
-            className={`rounded-lg overflow-hidden`}
+            className={`rounded-lg overflow-hidden shadow-md`}
             ranges={[selectionRange]} 
             minDate={new Date()}
             maxDate={addDays(new Date(), 365)}

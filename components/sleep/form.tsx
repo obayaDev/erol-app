@@ -1,20 +1,14 @@
 "use client"
 
 import BookingCalendar from "@/components/sleep/BookingCalendar";
-import Link from "next/link"
-import { FormEvent, useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState } from "react";
 import LoadingDots from "@/components/login/loading-dots";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { min } from "date-fns";
-import { events } from "@prisma/client";
-
 
 export default function SleepForm(){
 
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [emailValidated, setEmailValidated] = useState(false);
   const [dateIn, setDateIn] = useState(new Date());
   const [dateOut, setDateOut] = useState(new Date());
 
@@ -23,6 +17,7 @@ export default function SleepForm(){
     const [hour, minute] = hourMinute.split(":");
     date.setHours(Number(hour), Number(minute));
   }
+  
 
   return(
     <>
@@ -30,18 +25,18 @@ export default function SleepForm(){
             
             className="flex w-fit flex-col space-y-4 mx-auto rounded-2xl"
           
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               setLoading(true);
-              addHourToDate(dateIn, e.currentTarget.timeIn.value);
-              addHourToDate(dateOut, e.currentTarget.timeOut.value);
 
-              fetch("api/registerSleep", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
+              const timeToCreateSleepForm = {
+                timeIn: e.currentTarget.timeIn.value,
+                timeOut: e.currentTarget.timeIn.value,
+              }
+
+              const dataToCreateSleepForm = {
+                time: timeToCreateSleepForm,
+                data: {
                   email: e.currentTarget.email.value,
                   phone: e.currentTarget.phone.value,
                   name: e.currentTarget.nombre.value,
@@ -52,23 +47,69 @@ export default function SleepForm(){
                   dateOut: dateOut,
                   capsQuatitiy: e.currentTarget.capsQuatitiy.value,
                   childQuatitiy: e.currentTarget.childQuatitiy.value,
-                }),
-              }).then(async (res) => {
-                setLoading(false);
-                if (res.status === 200) {
-                  toast.success("Reserva feta!");
-                }else if(res.status === 400){
-                  toast.error("Ja hi ha una reserva feta amb aquest correu")
-                }else {
-                  toast.error(await res.text());
                 }
+              }
+
+              const event = e;
+
+              const miPromesa = new Promise((resolve, reject) => {
+                fetch("/api/email/emailExist", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: dataToCreateSleepForm.data.email,
+                  }),
+                })
+                .then(async (res) => res.json())
+                .then((data) => {
+                  setEmailValidated(data.valid);
+                  console.log(data.valid);
+                  if(data.valid){
+                    resolve(dataToCreateSleepForm);
+                  }else{
+                    reject(event);
+                  }
+                });
+              })
+
+              miPromesa.then((d) => {
+                setEmailValidated(true);
+                addHourToDate(dateIn, dataToCreateSleepForm.time.timeIn);
+                addHourToDate(dateOut, dataToCreateSleepForm.time.timeOut);
+
+                fetch("api/sleep/registerSleep", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    data: dataToCreateSleepForm.data
+                  }),
+                }).then(async (res) => {
+                  setLoading(false);
+                  if (res.status === 200) {
+                    toast.success("Reserva feta!");
+                  }else if(res.status === 400){
+                    toast.error("Ja hi ha una reserva feta amb aquest correu")
+                  }else {
+                    toast.error(await res.text());
+                  }
+                });
               });
+
+              miPromesa.catch((e) => {
+                setLoading(false);
+                toast.error("L'email introduit no és valid, revisa'l");
+              });
+
             }}
           
           >
             <div className="w-full flex flex-col space-y-4 p-4 rounded-xl">
               <div className="flex flex-row space-x-4">
-                <input name="email" type="email" placeholder='Email' className="w-2/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6 invalid:border-pink-500 invalid:text-pink-600" required></input>
+                <input name="email" type="email" placeholder='Email' className={`w-2/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6 invalid:border-pink-500 invalid:text-pink-600 ${emailValidated ? "text-green-600":"text-red-500"}`} required></input>
                 <input name="phone" type="tel" placeholder='Telefon' className="w-1/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6" required></input>
               </div>
               <div className="flex flex-row space-x-4">

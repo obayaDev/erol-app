@@ -1,11 +1,12 @@
 import { FaHandPointRight, FaExclamation } from "react-icons/fa"
 import SleepForm from "@/components/sleep/form";
+import TestEmailBtn from "@/components/sleep/testEmailBtn";
 
 export default function Dormir(){
 
   return(
     <main className="my-auto mx-auto">
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col mt-4 lg:mt-0 lg:flex-row">
           <div className="flex w-fit flex-col space-y-4 mx-auto rounded-2xl lg:mx-0 lg:text-sm border-4 py-2 border-stone-200 shadow-lg">
             <div className="-mb-4 text-center">
               <h1 className="text-blue-600 font-extrabold text-xs inline-block align-bottom uppercase lg:text-xs">Formulari de reserva per dormir al cau</h1>
@@ -20,7 +21,7 @@ export default function Dormir(){
             <div className="flex flex-col justify-star px-4 py-4 space-y-3">
               <div className="flex flex-row">
                 <FaExclamation className="my-auto w-7"/>
-                <div className="my-auto px-2 flex align-middle"><p className="text-xs font-semibold"><span className="font-extrabold text-base">Important!</span> Reviseu el correu i el telefon perquè si no està ben escrit no us podrem confirmar la reserva.</p></div>
+                <div className="my-auto px-2 flex align-middle"><p className="text-xs font-semibold"><span className="font-extrabold text-base">Important!</span> Només s'accepta <span className="text-red-600">Gmail</span> com a correu.</p></div>
               </div>
               <div className="flex flex-row">
                 <FaHandPointRight className="my-auto w-8 max-w-fit"/>

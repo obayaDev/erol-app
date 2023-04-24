@@ -15,7 +15,7 @@ export default async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (!session && (path === "/caps" || path === "/families" || path === "/protected")) {
+  if (!session && (path.includes("/caps") || path.includes("/families") || path === "/protected")) {
     return NextResponse.redirect(new URL("/login", req.url));
   }else if (session && (path === "/login" || path === "/register" || path === "/protected") && session?.role === "cap") {
     return NextResponse.redirect(new URL("/caps", req.url));

@@ -55,7 +55,7 @@ model files {
 }
 
 model forms_sleep {
-  id              BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  id              Int  @id @default(autoincrement())
   name            String
   firstName       String
   email           String

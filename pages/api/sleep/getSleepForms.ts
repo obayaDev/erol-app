@@ -1,4 +1,4 @@
-import prisma from "../../prisma/client";
+import prisma from "../../../prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function GetSleepForms(req:NextApiRequest ,res: NextApiResponse){
