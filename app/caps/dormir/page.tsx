@@ -11,7 +11,14 @@ export const dynamic = "force-dynamic"
 
 export default async function Sleep(){
   let loading = false;
-  let bookings:any[] = await getBookings();
+  let cualquiera:any[] = await getBookings();
+
+  cualquiera.forEach(booking => {
+    booking.id = Number(booking.id);
+  });
+
+  let bookings:BookingType[] = cualquiera;
+  
   console.log(typeof(bookings[0].id))
   bookings.sort((a, b) => a.dateIn.getTime() - b.dateIn.getTime());
   
