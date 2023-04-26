@@ -35,12 +35,7 @@ export default async function getBookings(){
         confirmed: true,
       }
     });
-    const bookings = response.map((booking) => ({
-      ...booking,
-      dateIn: booking.dateIn.toISOString(), // Convert Date to ISO string
-      dateOut: booking.dateOut.toISOString(), // Convert Date to ISO string
-    }));
-    return bookings;
+    return response;
   }catch(error){
     throw new Error(`An error has occured`)
   }
