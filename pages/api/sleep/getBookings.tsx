@@ -3,7 +3,7 @@ import "server-only";
 import prisma from "../../../prisma/client";
 
 export type BookingType = {
-  id: Number,
+  id: number,
   name: String,
   firstName: String,
   email: String,
