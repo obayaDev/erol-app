@@ -14,7 +14,7 @@ export default function Caps(){
       <MenuPadSlide 
         title="crea i edita notícies" 
         btnTitle="info" 
-        btnIconOpened={<BsArrowDownCircleFill 
+        btnIconOpened={<BsArrowUpCircleFill 
         className="my-auto ml-2"/>} 
         btnIconClosed={<BsArrowDownCircleFill 
         className="my-auto ml-2"/>} 
