@@ -5,7 +5,7 @@ import getBookings, { BookingType } from "@/pages/api/sleep/getBookings";
 import toast from "react-hot-toast";
 import BookingTable from "@/components/sleep/bookingTable";
 import BookingsSearchBar from "@/components/sleep/searchBar";
-import SeeBookingCalendar from "@/components/sleep/seeBookingCalendar";
+import SeeBookingCalendar from "@/components/sleep/bookingsViewer";
 
 export const dynamic = "force-dynamic"
 

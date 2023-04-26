@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
+import { createStaticRanges, DateRangePicker } from 'react-date-range';
 const rdrLocales = require('react-date-range/dist/locale');
 import { addDays, isWeekend, toDate } from 'date-fns';
 import LoadingDots from "@/components/login/loading-dots";
@@ -46,6 +46,7 @@ export default function SeeBookingCalendar() {
         sleepForm.dateOut = new Date(sleepForm.dateOut);
         sleepForm.dateIn.setHours(0, 0);
         sleepForm.dateOut.setHours(0, 0);
+
         datesToRemove.push(sleepForm.dateIn);
         datesToRemove.push(sleepForm.dateOut);
       });
@@ -79,18 +80,17 @@ export default function SeeBookingCalendar() {
         </div>
         ) : (
           <DateRangePicker
+            months={2}
             className={`rounded-lg overflow-hidden shadow-md`}
             ranges={[selectionRange]} 
             minDate={new Date()}
             maxDate={addDays(new Date(), 365)}
             locale={rdrLocales.es}
             onChange={handleSelect}
-            moveRangeOnFirstSelection={true}
             showDateDisplay={false}
             staticRanges={[]}
             inputRanges={[]}
             disabledDates={disabledDates}
-            
           />
         )}
       </div>
