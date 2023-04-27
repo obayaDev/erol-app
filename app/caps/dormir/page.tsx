@@ -11,7 +11,9 @@ export const dynamic = "force-dynamic"
 
 export default async function Sleep(){
   let loading = false;
-  let cualquiera:any[] = await getBookings();
+  //let cualquiera:any[] = await getBookings();
+
+  let cualquiera:any[] = await prisma.forms_sleep.findMany();
 
   cualquiera.forEach(booking => {
     booking.id = Number(booking.id);
