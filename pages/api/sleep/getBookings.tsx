@@ -37,7 +37,7 @@ export default async function getBookings(){
     });
     return response;
   }catch(error){
-    throw new Error(`An error has occured`)
+    throw new Error(`ERROR: ${error} `)
   }
   
 }

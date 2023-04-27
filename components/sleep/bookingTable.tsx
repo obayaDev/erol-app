@@ -2,9 +2,9 @@
 import { useState, useEffect} from "react"
 import LoadingDots from "../login/loading-dots";
 import { BookingType } from "@/pages/api/sleep/getBookings";
-import { BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs"
+import { BsBookmarksFill, BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs"
 import { TbClockHour3, TbSquareRoundedLetterN, TbSquareRoundedLetterG, TbSquareRoundedLetterC, TbSquareRoundedLetterI } from "react-icons/tb"
-import { MdOutlineMarkEmailRead } from "react-icons/md"
+import { MdDeleteSweep, MdOutlineMarkEmailRead, MdOutlinePeople } from "react-icons/md"
 import { AiTwotonePhone } from "react-icons/ai"
 import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs"
 import {FiDroplet} from "react-icons/fi"
@@ -32,17 +32,55 @@ export default function BookingTable (props:{bookings: BookingType[]}){
     return
   }
 
+  function getLetterMonth(dateIn: Date, dateOut: Date): string {
+    const meses = ['gen', 'feb', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'oct', 'nov', 'des'];
+    if(dateIn.getMonth() === dateOut.getMonth()){
+      return meses[dateIn.getMonth()];
+    }else{
+      const res = meses[dateIn.getMonth()] + "-" + meses[dateIn.getMonth()]
+      return meses[dateIn.getMonth()];
+    }
+  }
+
   useEffect(() => {
     setLoading(false);
   }, [varBookings]);
+
+
   
   return(
     <>
-      <div className="flex flex-col w-full gap-y-4 mt-10 transition-[height]">
+      <div className="flex flex-col w-full mt-10 transition-[height] gap-y-4">
+
+        <div className="flex flex-row w-full justify-start bg-white py-4 rounded-xl shadow-xl">
+          <div className="flex flex-row basis-2/6 justify-center py-1 md:py-2"><BsCalendarDate className="mr-2 text-lg my-auto text-blue-600"/><span className="leading-3 my-auto">Dates</span></div>
+          <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2"><TbClockHour3 className="text-lg my-auto text-blue-600"/></div>
+          <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2"><MdOutlinePeople className=" text-xl my-auto text-blue-600"/></div>
+          <div className="flex flex-row basis-2/6 justify-center py-1 md:py-2"><BsBookmarksFill className=" text-lg my-auto text-blue-600"/></div>
+        </div>
         {varBookings.map((booking, key) => {
           return(
             <>
-            <div className="flex flex-row gap-x-1">
+              <div className={`flex flex-row w-full text-xs md:text-bas py-1 bg-white rounded-xl ${booking.confirmed ? "border border-emerald-400 shadow-md shadow-emerald-600":"shadow-lg"}`}>
+                <div className="flex flex-row basis-2/6 justify-center py-1"><span className="my-auto">{getLetterMonth(booking.dateIn, booking.dateOut)} - {booking.dateIn.getDate()} | {booking.dateOut.getDate()}</span></div>
+                <div className="flex flex-col gap-y-0.5 basis-1/6 justify-center py-1 md:py-2">
+                  <div className="text-center">{booking.dateIn.getHours()}:{booking.dateIn.getMinutes() === 0 ? "00":booking.dateOut.getMinutes()}</div>
+                  <div className="text-center">{booking.dateOut.getHours()}:{booking.dateOut.getMinutes() === 0 ? "00":booking.dateOut.getMinutes()}</div>
+                </div>
+                <div className="flex flex-col gap-y-0.5 basis-1/6 justify-center py-1 md:py-2">
+                  <div className="text-center"><span>caps: </span>{booking.capsQuatitiy}</div>
+                  <div className="text-center"><span>inf: </span>{booking.childQuatitiy}</div>
+                </div>
+                <div className="flex flex-row basis-2/6 justify-evenly py-1 md:py-2 opacity-75">
+                  <span className="my-auto text-lg cursor-pointer text-blue-600"><BsFillBookmarkCheckFill/></span>
+                  <span className="my-auto text-lg cursor-pointer text-blue-600"><BsFillBookmarkXFill/></span>
+                  <span className="my-auto text-2xl cursor-pointer text-red-600"><MdDeleteSweep/></span>
+                </div>
+              </div>
+            </>
+          )
+        })}
+        {/* <div className="flex flex-row gap-x-1">
 
               <div  onClick={() => {handleOpenDiv(key)}} className={`${key === keyOpen && open ? "h-24":"h-14"} cursor-pointer flex flex-row w-full flex-wrap justify-evenly overflow-hidden gap-x-4 gap-y-4 py-4 px-4 rounded-l-xl bg-white shadow-lg transition-[height]`}>
                 <div className="flex flex-row basis-28 relative justify-evenly bg-slate-300 rounded-xl py-2 pl-3 pr-2">
@@ -105,13 +143,8 @@ export default function BookingTable (props:{bookings: BookingType[]}){
                     <p className="leading-3 my-auto mx-auto truncate">{loading ? <LoadingDots/>:""}</p>
                 </div>
               </div>
-            </div>
-            </>
-          )
-        })}
-        <FiDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-br from-teal-500 to-emerald-400 p-2 rounded-xl"/>
-        <RiDropFill className="text-5xl mx-auto my-4 text-white bg-gradient-to-br from-teal-500 to-emerald-400 p-2 rounded-xl"/>
-        <ImDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-tr from-teal-600 to-emerald-400 p-2 rounded-xl"/>
+            </div> */}
+        {/* <ImDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-tr from-teal-600 to-emerald-400 p-2 rounded-xl"/> */}
       </div>
     </>
     
