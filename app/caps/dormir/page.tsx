@@ -11,8 +11,6 @@ export const dynamic = "force-dynamic"
 
 export default async function Sleep(){
   let loading = false;
-
-  let bookings:BookingType[] = []
   
   /*let cualquiera:any[] = await getBookings();
 
@@ -26,14 +24,14 @@ export default async function Sleep(){
   
   return(
     <main>
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <BookingsSearchBar/>
         <div className="flex flex-col lg:flex-row-reverse gap-x-4 w-full mx-auto">
           <div className="mx-auto mt-10"><SeeBookingCalendar/></div>
           <BookingTable bookings={bookings}/>
         </div>
         
-      </div>
+      </div> */}
     </main>
   )
 }
