@@ -34,6 +34,7 @@ export default function SeeBookingCalendar() {
           key: key.toString(),
         });
       });
+      console.log(occupiedDates);
       setLoading(false);
     });
   }, []);

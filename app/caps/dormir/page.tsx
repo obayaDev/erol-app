@@ -13,14 +13,13 @@ export default async function Sleep(){
   let loading = false;
   let cualquiera:any[] = await getBookings();
 
-  console.log(typeof(cualquiera[0].dateIn));
+  cualquiera.forEach(booking => {
+    booking.id = Number(booking.id);
+  });
 
-  const bookings = cualquiera.map((booking) => ({
-    ...booking,
-    dateIn: new Date(booking.dateIn), // Convert Date to ISO string
-    dateOut: new Date(booking.dateOut), // Convert Date to ISO string
-  }));
+  let bookings:BookingType[] = cualquiera;
   
+  console.log(typeof(bookings[0].id))
   bookings.sort((a, b) => a.dateIn.getTime() - b.dateIn.getTime());
   
   return(
