@@ -14,21 +14,23 @@ export default async function Sleep(){
 
   let bookings:BookingType[] = []
   
-  let cualquiera:any[] = await getBookings();
+  /*let cualquiera:any[] = await getBookings();
 
   cualquiera.forEach(booking => {
     booking.id = Number(booking.id);
   });
+
+  let bookings:BookingType[] = cualquiera;
   
-  bookings.sort((a, b) => a.dateIn.getTime() - b.dateIn.getTime());
+  bookings.sort((a, b) => a.dateIn.getTime() - b.dateIn.getTime());*/
   
   return(
     <main>
       <div className="mt-8">
         <BookingsSearchBar/>
         <div className="flex flex-col lg:flex-row-reverse gap-x-4 w-full mx-auto">
-          {/* <div className="mx-auto mt-10"><SeeBookingCalendar/></div> */}
-          <BookingTable bookings={cualquiera}/>
+          <div className="mx-auto mt-10"><SeeBookingCalendar/></div>
+          <BookingTable bookings={bookings}/>
         </div>
         
       </div>
