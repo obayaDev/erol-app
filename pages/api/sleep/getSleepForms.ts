@@ -15,7 +15,7 @@ export default async function GetSleepForms(req:NextApiRequest ,res: NextApiResp
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(data);
   }catch(error){
-    res.status(500).json(`Error: server loading data output an ERROR: ${error}`);
+    res.status(500).json("Error: server loading data output an error. Contact with Alex Obaya if the error persist");
   }
   
 }
