@@ -2,15 +2,14 @@
 import { useState, useEffect} from "react"
 import LoadingDots from "../login/loading-dots";
 import { BookingType } from "@/pages/api/sleep/getBookings";
-import { BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill, BsHourglass, BsBookmarksFill } from "react-icons/bs"
+import { BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs"
 import { TbClockHour3, TbSquareRoundedLetterN, TbSquareRoundedLetterG, TbSquareRoundedLetterC, TbSquareRoundedLetterI } from "react-icons/tb"
-import { MdOutlineMarkEmailRead, MdOutlinePeople } from "react-icons/md"
+import { MdOutlineMarkEmailRead } from "react-icons/md"
 import { AiTwotonePhone } from "react-icons/ai"
 import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs"
 import {FiDroplet} from "react-icons/fi"
 import {RiDropFill} from "react-icons/ri"
 import {ImDroplet} from "react-icons/im"
-import { IoMdContact } from "react-icons/io" 
 
 import toast from "react-hot-toast";
 
@@ -39,26 +38,13 @@ export default function BookingTable (props:{bookings: BookingType[]}){
   
   return(
     <>
-      <div className="flex flex-col w-full gap-y-2 mt-10 transition-[height] text-xs md:text-base">
-        <div className="flex flex-row w-full justify-start bg-white py-4 rounded-t-3xl shadow-md">
-          <div className="flex flex-row basis-1/3 justify-center py-1 md:py-2"><BsCalendarDate className="mr-2 text-sm md:text-base my-auto"/><span className="leading-3 my-auto">Dates</span></div>
-          <div className="flex flex-row basis-1/3 justify-center py-1 md:py-2 border-l-2 border-l-slate-300"><TbClockHour3 className="mr-2 text-sm md:text-base my-auto"/><span className="leading-3 my-auto">Horaris</span></div>
-          <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2 border-l-2 border-l-slate-300"><MdOutlinePeople className=" text-lg md:text-base my-auto"/></div>
-          <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2 border-l-2 border-l-slate-300 "><BsBookmarksFill className=" text-sm md:text-base my-auto"/></div>
-        </div>
+      <div className="flex flex-col w-full gap-y-4 mt-10 transition-[height]">
         {varBookings.map((booking, key) => {
           return(
             <>
             <div className="flex flex-row gap-x-1">
 
-              <div className="flex flex-row w-full justify-center bg-white py-4 gap-x-2 shadow-md">
-                <div className="basis-1/3 justify-center">
-                  <div className="text-center">{booking.dateIn.getMonth().toLocaleString()}/{booking.dateIn.getDate()}</div>
-                  <div className="text-center">{booking.dateOut.getMonth()}/{booking.dateOut.getDate()}</div>                  
-                </div>
-              </div>
-
-              {/* <div  onClick={() => {handleOpenDiv(key)}} className={`${key === keyOpen && open ? "h-24":"h-14"} cursor-pointer flex flex-row w-full flex-wrap justify-evenly overflow-hidden gap-x-4 gap-y-4 py-4 px-4 rounded-l-xl bg-white shadow-lg transition-[height]`}>
+              <div  onClick={() => {handleOpenDiv(key)}} className={`${key === keyOpen && open ? "h-24":"h-14"} cursor-pointer flex flex-row w-full flex-wrap justify-evenly overflow-hidden gap-x-4 gap-y-4 py-4 px-4 rounded-l-xl bg-white shadow-lg transition-[height]`}>
                 <div className="flex flex-row basis-28 relative justify-evenly bg-slate-300 rounded-xl py-2 pl-3 pr-2">
                   <BsCalendarDate className="text-2xl text-blue-600 -ml-6 -mt-5 bg-white border-2 border-white rounded-lg p-0.5"/>
                   <p className="leading-3 my-auto">{booking.dateIn.getMonth()}/{booking.dateIn.getDate()} - {booking.dateOut.getMonth()}/{booking.dateOut.getDate()}</p>
@@ -91,8 +77,8 @@ export default function BookingTable (props:{bookings: BookingType[]}){
                   <MdOutlineMarkEmailRead className="text-2xl text-blue-600 -ml-3 -mt-5 bg-white border-2 border-white rounded-lg p-0.5"/>
                   <p className="leading-3 my-auto mx-auto truncate">{booking.email}</p>
                 </div>
-              </div> */}
-              {/* <div className="flex flex-row px-4 py-4 gap-x-4 bg-white rounded-r-xl shadow-lg ">
+              </div>
+              <div className="flex flex-row px-4 h-14 py-3.5 gap-x-4 bg-white rounded-r-xl shadow-xl ">
                 <div onClick={() => {
                       setLoading(true);
                         const response = fetch("/api/sleep/setConfirmed", {
@@ -114,16 +100,18 @@ export default function BookingTable (props:{bookings: BookingType[]}){
                           setLoading(false);
                         }
                       })
-                    }} className={`flex flex-row w-8 relative justify-evenly rounded-lg py-2 pr-2 text-white cursor-pointer ${booking.confirmed ? "bg-lime-500":"bg-red-400"}`}>
-                    {booking.confirmed ? <><BsFillBookmarkCheckFill className={`text-2xl ${booking.confirmed ? "text-lime-500":"text-red-400"} -ml-3 -mt-5 bg-white border-2 border-white rounded-lg p-0.5`}/></>:<><BsFillBookmarkXFill className="text-2xl text-blue-600 -ml-3 -mt-5 bg-white border-2 border-white rounded-lg p-0.5"/></>}
+                    }} className={`flex flex-row w-16 relative justify-evenly rounded-lg py-2 pr-2 text-white cursor-pointer ${booking.confirmed ? "bg-lime-500":"bg-red-400"}`}>
+                    {booking.confirmed ? <><BsFillBookmarkCheckFill className="text-2xl text-blue-600 -ml-3 -mt-5 bg-white border-2 border-white rounded-lg p-0.5"/></>:<><BsFillBookmarkXFill className="text-2xl text-blue-600 -ml-3 -mt-5 bg-white border-2 border-white rounded-lg p-0.5"/></>}
                     <p className="leading-3 my-auto mx-auto truncate">{loading ? <LoadingDots/>:""}</p>
                 </div>
-              </div> */}
+              </div>
             </div>
             </>
           )
         })}
-        {/* <ImDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-tr from-teal-600 to-emerald-400 p-2 rounded-xl"/> */}
+        <FiDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-br from-teal-500 to-emerald-400 p-2 rounded-xl"/>
+        <RiDropFill className="text-5xl mx-auto my-4 text-white bg-gradient-to-br from-teal-500 to-emerald-400 p-2 rounded-xl"/>
+        <ImDroplet className="text-5xl mx-auto my-4 text-white bg-gradient-to-tr from-teal-600 to-emerald-400 p-2 rounded-xl"/>
       </div>
     </>
     
