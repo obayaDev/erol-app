@@ -15,6 +15,7 @@ export type BookingType = {
   dateIn: Date,
   dateOut: Date,
   confirmed: Boolean,
+  emailSend: number,
 }
 
 export default async function getBookings(){
@@ -33,6 +34,7 @@ export default async function getBookings(){
         dateIn: true,
         dateOut: true,
         confirmed: true,
+        emailSend: true,
       }
     });
     return response;

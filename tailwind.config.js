@@ -9,7 +9,12 @@ module.exports = {
     extend: {
       transitionProperty: {
           height: 'height'
-      }
+      },
+      colors: {
+        primary: '#FFFFFF',
+        secondary: '#82A6B1',
+        accent: '#726953',
+      },
   }
   },
   plugins: [

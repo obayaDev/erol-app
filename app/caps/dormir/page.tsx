@@ -27,11 +27,10 @@ export default async function Sleep(){
     <main>
       <div className="mt-8">
         <BookingsSearchBar/>
-        <div className="flex flex-col lg:flex-row-reverse gap-x-4 w-full mx-auto">
+        <div className="flex flex-col lg:flex-row-reverse gap-x-4 justify-center mx-auto">
           <div className="mx-auto mt-10"><BookingsViewer/></div>
           <BookingTable bookings={bookings}/>
         </div>
-        
       </div>
     </main>
   )

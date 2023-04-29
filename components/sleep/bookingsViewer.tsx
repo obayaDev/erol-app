@@ -43,7 +43,7 @@ export default function BookingsViewer() {
 
   }
 
-  const rangeColors = ['#000000','#2563EB']
+  const rangeColors = ['#726953','#82A6B1']
 
 
   const selectionRange = [
@@ -63,13 +63,13 @@ export default function BookingsViewer() {
       <div>
 
         {loading ? (
-          <div className="h-72 w-80 mx-1.5 my-0.5 flex justify-center align-middle">
+          <div className="h-60 w-80 mx-1.5 my-36 flex justify-center align-middle">
             <LoadingDots color="#808080"/>
         </div>
         ) : (
           <DateRange
             months={2}
-            className={`rounded-3xl overflow-hidden shadow-md`}
+            className={`rounded-3xl overflow-hidden shadow-lg shadow-secondary`}
             ranges={occupiedDates} 
             minDate={new Date()}
             maxDate={addDays(new Date(), 365)}

@@ -68,6 +68,7 @@ model forms_sleep {
   dateOut         DateTime
   confirmed       Boolean
   confirmed_by_id Int
+  emailSend       Int @default(0)
 }
 
 model news {
