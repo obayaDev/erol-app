@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
   const {email, subject, text, file, fileName, path} = req.body;
+  const filePath = path.join(process.cwd(), 'public', path, fileName);
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ionos.es',
@@ -30,17 +31,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   });
 
-  /* const mailOptions = {
-    from: {
-        name: `Dormir - Erol St. Celoni`,
-        address: "dormir@erol.cat",
-    },
-    replyTo: "dormir@erol.cat",
-    to: email,
-    subject: subject,
-    text: text,
-  }; */
-
   let mailOptions:any
 
   mailOptions = {
@@ -52,6 +42,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     to: email,
     subject: subject,
     text: text,
+    attachments: [
+      {
+        filename: fileName,
+        path: filePath,
+      }
+    ],
   }
 
   /* if(file === true){
