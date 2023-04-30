@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
-  const {email, subject, text, file, fileName, path} = req.body;
+  const {email, subject, text} = req.body;
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ionos.es',
@@ -19,7 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let mailOptions:any
 
-  if(file){
+  mailOptions = {
+    from: 'dormir@erol.cat',
+    to: email,
+    subject: subject,
+    text: text
+  };
+  
+  /* if(file){
     mailOptions = {
       from: 'dormir@erol.cat',
       to: email,
@@ -39,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       subject: subject,
       text: text
     };
-  }
+  } */
   
   
 
