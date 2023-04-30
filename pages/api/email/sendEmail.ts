@@ -6,7 +6,11 @@ import path from "path"
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
   const {email, subject, text, file, fileName} = req.body;
-  const filePath = path.join(process.cwd(), 'public', "email", fileName);
+  
+  let filePath:string = "";
+  if(file === true){
+    filePath = path.join(process.cwd(), 'public', "email", fileName);
+  }
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ionos.es',
