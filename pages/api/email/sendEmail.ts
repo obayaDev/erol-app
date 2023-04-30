@@ -30,15 +30,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   });
 
-  let mailOptions:any
-
-  mailOptions = {
-    from: 'dormir@erol.cat',
-    to: email,
-    subject: subject,
-    text: text
+  const mailOptions = {
+    from: {
+        name: `Erol Sant Celoni`,
+        address: "dormir@erol.cat",
+    },
+    replyTo: "dormir@erol.cat",
+    to: "obaya27k@gmail.com",
+    subject: `Prueba`,
+    text: "pureba",
   };
-  
+
+  //let mailOptions:any
   /* if(file){
     mailOptions = {
       from: 'dormir@erol.cat',
