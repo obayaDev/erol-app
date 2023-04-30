@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let mailOptions:any
 
-  if(file){
+  if(file === true){
       mailOptions = {
         from: {
           name: `Dormir - Erol St. Celoni`,
