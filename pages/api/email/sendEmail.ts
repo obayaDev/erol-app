@@ -1,10 +1,12 @@
 import prisma from '@/prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
+import path from "path"
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
-  const {email, subject, text, file, fileName, path} = req.body;
-  const filePath = path.join(process.cwd(), 'public', path, fileName);
+  const {email, subject, text, file, fileName, pathName} = req.body;
+  const filePath = path.join(process.cwd(), 'public', pathName, fileName);
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ionos.es',

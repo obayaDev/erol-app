@@ -77,7 +77,7 @@ export default function SleepForm(){
                 text: "Bones, us enviem aquest email amb un document adjunt que haureu de d'omplir i reenviar, en resposta a aquest correu per tal de confirmar la reserva. Penseu que fins que no s'envi el document les dates quedaran lliures i un altre cau podrà reservar aquestes dates.",
                 file: false,
                 fileName: "documentDeConformitat.docx",
-                path: "email",
+                pathName: "email",
               }),
             }).then((res) => {
               if(res.status === 200){
