@@ -16,6 +16,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ciphers:'SSLv3'
     }
   });
+  
+  await new Promise((resolve, reject) => {
+      // verify connection configuration
+    transporter.verify(function (error, success) {
+        if (error) {
+            console.log(error);
+            reject(error);
+        } else {
+            console.log("Server is ready to take our messages");
+            resolve(success);
+        }
+    });
+  });
 
   let mailOptions:any
 
@@ -49,21 +62,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } */
   
   
-
-  transporter.sendMail(mailOptions, async (error, info) => {
-    if(error){
-      res.status(400).json({exist: true, response: error});
-    }else{
-      /* const response = await prisma.forms_sleep.update({
-        where:{
-          id: id,
-        },
-        data:{
-          emailSend: numEmailsSended,
-        }
-      }); */
-      res.status(200).json({exist: true, response: error});
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, async (error, info) => {
+      if(error){
+        console.error(error);
+        reject(error);
+      }else{
+        console.log(info);
+        resolve(info);
+      }
+    });
   });
-
+  res.status(200).json({ status: "OK" });
 }
