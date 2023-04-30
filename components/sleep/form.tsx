@@ -75,7 +75,7 @@ export default function SleepForm(){
                 email: dataToCreateSleepForm.data.email,
                 subject: "Dormir al cau de l'Erol",
                 text: "Bones, us enviem aquest email amb un document adjunt que haureu de d'omplir i reenviar, en resposta a aquest correu per tal de confirmar la reserva. Penseu que fins que no s'envi el document les dates quedaran lliures i un altre cau podrà reservar aquestes dates.",
-                file: false,
+                file: true,
                 fileName: "documentDeConformitat.docx",
               }),
             }).then((res) => {

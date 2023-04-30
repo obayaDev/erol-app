@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let mailOptions:any
 
-  mailOptions = {
+  /* mailOptions = {
     from: {
         name: `Dormir - Erol St. Celoni`,
         address: "dormir@erol.cat",
@@ -50,11 +50,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         path: filePath,
       }
     ],
-  }
+  } */
 
-  /* if(file === true){
-      mailOptions = {
-        from: {
+  if(file === true){
+    mailOptions = {
+      from: {
           name: `Dormir - Erol St. Celoni`,
           address: "dormir@erol.cat",
       },
@@ -65,9 +65,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       attachments: [
         {
           filename: fileName,
-          path: path,
+          path: filePath,
         }
-      ]
+      ],
     };
   }else{
     mailOptions = {
@@ -79,8 +79,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       to: email,
       subject: subject,
       text: text,
-    }
-  } */
+    };
+  }
   
   
   await new Promise((resolve, reject) => {
