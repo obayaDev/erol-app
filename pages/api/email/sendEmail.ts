@@ -6,7 +6,7 @@ import path from "path"
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
   const {email, subject, text, file, fileName} = req.body;
-  
+
   let filePath:string = "";
   if(file === true){
     filePath = path.join(process.cwd(), 'public', "email", fileName);
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     port: 587,
     auth: {
       user: 'dormir@erol.cat',
-      pass: '2433AlexXana',
+      pass: 'Sempreapunt23',
     },
     tls: {
       ciphers:'SSLv3'
