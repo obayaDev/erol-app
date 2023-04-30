@@ -43,7 +43,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let mailOptions:any
 
-  if(file === true){
+  mailOptions = {
+    from: {
+        name: `Dormir - Erol St. Celoni`,
+        address: "dormir@erol.cat",
+    },
+    replyTo: "dormir@erol.cat",
+    to: email,
+    subject: subject,
+    text: text,
+  }
+
+  /* if(file === true){
       mailOptions = {
         from: {
           name: `Dormir - Erol St. Celoni`,
@@ -71,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       subject: subject,
       text: text,
     }
-}
+  } */
   
   
   await new Promise((resolve, reject) => {
