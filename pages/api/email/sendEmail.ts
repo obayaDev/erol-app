@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 
-  const {email, subject, text} = req.body;
+  const {email, subject, text, file, fileName, path} = req.body;
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ionos.es',
@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   });
 
-  const mailOptions = {
+  /* const mailOptions = {
     from: {
         name: `Dormir - Erol St. Celoni`,
         address: "dormir@erol.cat",
@@ -39,12 +39,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     to: email,
     subject: subject,
     text: text,
-  };
+  }; */
 
-  //let mailOptions:any
-  /* if(file){
-    mailOptions = {
-      from: 'dormir@erol.cat',
+  let mailOptions:any
+
+  if(file){
+      mailOptions = {
+        from: {
+          name: `Dormir - Erol St. Celoni`,
+          address: "dormir@erol.cat",
+      },
+      replyTo: "dormir@erol.cat",
       to: email,
       subject: subject,
       text: text,
@@ -57,12 +62,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
   }else{
     mailOptions = {
-      from: 'dormir@erol.cat',
+      from: {
+          name: `Dormir - Erol St. Celoni`,
+          address: "dormir@erol.cat",
+      },
+      replyTo: "dormir@erol.cat",
       to: email,
       subject: subject,
-      text: text
-    };
-  } */
+      text: text,
+    }
+}
   
   
   await new Promise((resolve, reject) => {
