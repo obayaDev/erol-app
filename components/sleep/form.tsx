@@ -50,7 +50,52 @@ export default function SleepForm(){
           }
         }
 
-        const event = e;
+        setEmailValidated(true);
+        addHourToDate(dateIn, dataToCreateSleepForm.time.timeIn);
+        addHourToDate(dateOut, dataToCreateSleepForm.time.timeOut);
+
+        fetch("api/sleep/registerSleep", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: dataToCreateSleepForm.data
+          }),
+        }).then(async (res) => {
+          setLoading(false);
+          if (res.status === 200) {
+            toast.success("Reserva feta!");
+            const response = fetch("/api/email/sendEmail", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: dataToCreateSleepForm.data.email,
+                subject: "Dormir al cau de l'Erol",
+                text: "Bones, us enviem aquest email amb un document adjunt que haureu de d'omplir i reenviar, en resposta a aquest correu per tal de confirmar la reserva. Penseu que fins que no s'envi el document les dates quedaran lliures i un altre cau podrà reservar aquestes dates.",
+                file: true,
+                fileName: "documentDeConformitat.docx",
+                path: "public/email/documentDeConformitat.docx",
+              }),
+            }).then((res) => {
+              if(res.status === 200){
+                toast.success("Email enviat, revisa el correu", {duration: 3000});
+                setLoading(false);
+              }else{
+                toast.error("Hi ha hagut un problema, torni-ho a intentar!", {duration: 3000});
+                setLoading(false);
+              }
+            })
+          }else if(res.status === 400){
+            toast.error("Ja hi ha una reserva feta amb aquest correu")
+          }else {
+            toast.error(await res.text());
+          }
+        });
+
+        /* const event = e;
 
         const miPromesa = new Promise((resolve, reject) => {
           fetch("/api/email/emailExist", {
@@ -124,7 +169,7 @@ export default function SleepForm(){
         miPromesa.catch((e) => {
           setLoading(false);
           toast.error("L'email introduit no és valid, revisa'l");
-        });
+        }); */
 
       }}
     
