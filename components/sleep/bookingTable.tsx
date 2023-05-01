@@ -3,9 +3,9 @@ import { useState, useEffect} from "react"
 import { useRouter } from 'next/router'
 import LoadingDots from "../login/loading-dots";
 import { BookingType } from "@/pages/api/sleep/getBookings";
-import { BsBookmarksFill, BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs"
+import { BsBookmarksFill, BsCalendarDate, BsFillBookmarkCheckFill, BsFillBookmarkXFill, BsPersonBadgeFill, BsPhone } from "react-icons/bs"
 import { TbClockHour3, TbSquareRoundedLetterN, TbSquareRoundedLetterG, TbSquareRoundedLetterC, TbSquareRoundedLetterI } from "react-icons/tb"
-import { MdDelete, MdOutlineMarkEmailRead, MdOutlinePeople } from "react-icons/md"
+import { MdDelete, MdOutlineMan4, MdOutlineMarkEmailRead, MdOutlinePeople } from "react-icons/md"
 import { AiTwotonePhone } from "react-icons/ai"
 import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs"
 import {FiDroplet} from "react-icons/fi"
@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 export default function BookingTable (props:{bookings: BookingType[]}){
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [keyOpen, setKeyOpen] = useState(0);
+  const [openKey, setOpenKey] = useState(0);
   props.bookings.forEach((booking) => {
     booking.dateIn = new Date(booking.dateIn);
     booking.dateOut = new Date(booking.dateOut);
@@ -67,7 +67,8 @@ export default function BookingTable (props:{bookings: BookingType[]}){
           const minnOut = booking.dateOut.getMinutes() < 10 ? "0" + booking.dateOut.getMinutes().toString():booking.dateOut.getMinutes().toString();
           return(
             <>
-              <div className={`flex flex-row w-full text-xs md:text-bas py-1 bg-white ${key + 1 === varBookings.length ? "rounded-t-xl rounded-b-3xl":"rounded-xl"} shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
+            <div className="flex flex-col">
+              <div onClick={() => {setOpen(!open); setOpenKey(key + 1)}} className={`flex flex-row z-10 w-full text-xs md:text-bas py-1 bg-white ${key + 1 === varBookings.length ? "rounded-t-xl rounded-b-3xl":"rounded-xl"} shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
                 <div className="flex flex-col gap-y-0.5 basis-2/6 py-1"><span className="text-center font-semibold text-secondary">{booking.name}</span><span className="text-center">{getLetterMonth(booking.dateIn, booking.dateOut)} - {booking.dateIn.getDate()} | {booking.dateOut.getDate()}</span></div>
                 <div className="flex flex-col gap-y-0.5 basis-1/6 justify-center py-1 md:py-2">
                   <div className="text-center">{booking.dateIn.getHours()}:{minnIn}</div>
@@ -158,6 +159,21 @@ export default function BookingTable (props:{bookings: BookingType[]}){
                     className="my-auto text-xl cursor-pointer opacity-75 text-accent"><MdDelete/></span>
                 </div>
               </div>
+              <div className={`flex flex-col z-0 bg-white gap-y-2.5 -mt-4 overflow-hidden transition-[height] ${open && openKey === key + 1 ? "h-32 pt-9 pb-4 shadow-lg":"h-2"} ${key + 1 === varBookings.length ? "rounded-b-3xl":"rounded-b-3xl"}`}>
+                <div className="flex flex-row">
+                  <div className="basis-1/6 h-fit my-auto"><BiMailSend className="mx-auto text-lg text-secondary"/></div>
+                  <div className="basis-5/6 text-xs">{booking.email}</div>
+                </div>
+                <div className="flex flex-row">
+                  <div className="basis-1/6 h-fit my-auto"><BsPhone className="mx-auto text-lg text-secondary"/></div>
+                  <div className="basis-5/6 text-xs">{booking.phone}</div>
+                </div>
+                <div className="flex flex-row">
+                  <div className="basis-1/6 h-fit my-auto"><MdOutlineMan4 className="mx-auto text-lg text-secondary"/></div>
+                  <div className="basis-5/6 text-xs">{booking.group}</div>
+                </div>
+              </div>
+            </div>
             </>
           )
         })}

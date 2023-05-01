@@ -17,7 +17,7 @@ export default function Dormir(){
             <SleepForm/>
           </div>
 
-          <div className="flex flex-col mt-5 lg:mt-0 px-8 max-w-lg">
+          <div className="flex flex-col my-5 lg:mt-0 px-8 max-w-lg">
             <div className="mt-3.5">
               <h1 className="text-blue-600 font-extrabold text-sm inline-block align-bottom uppercase lg:text-xs">Instruccions</h1>
             </div>
