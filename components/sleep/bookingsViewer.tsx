@@ -43,7 +43,7 @@ export default function BookingsViewer() {
 
   }
 
-  const rangeColors = ['#726953','#82A6B1']
+  const rangeColors = ['#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1','#82A6B1']
 
 
   const selectionRange = [

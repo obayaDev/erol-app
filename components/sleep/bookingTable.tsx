@@ -56,7 +56,7 @@ export default function BookingTable (props:{bookings: BookingType[]}){
     <>
       <div className="flex flex-col w-full my-10 transition-[height] gap-y-4 max-w-lg">
 
-        <div className="flex flex-row w-full justify-start  rounded-xl shadow-xl bg-secondary">
+        <div className="flex flex-row w-full justify-start py-2 rounded-t-3xl rounded-b-xl shadow-xl bg-secondary">
           <div className="flex flex-row basis-2/6 justify-center py-1 md:py-2"><BsCalendarDate className="text-lg my-auto text-accent"/></div>
           <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2"><TbClockHour3 className="text-xl my-auto text-accent"/></div>
           <div className="flex flex-row basis-1/6 justify-center py-1 md:py-2"><MdOutlinePeople className="text-2xl my-auto text-accent"/></div>
@@ -67,7 +67,7 @@ export default function BookingTable (props:{bookings: BookingType[]}){
           const minnOut = booking.dateOut.getMinutes() < 10 ? "0" + booking.dateOut.getMinutes().toString():booking.dateOut.getMinutes().toString();
           return(
             <>
-              <div className={`flex flex-row w-full text-xs md:text-bas py-1 bg-white rounded-xl shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
+              <div className={`flex flex-row w-full text-xs md:text-bas py-1 bg-white ${key + 1 === varBookings.length ? "rounded-t-xl rounded-b-3xl":"rounded-xl"} shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
                 <div className="flex flex-col gap-y-0.5 basis-2/6 py-1"><span className="text-center font-semibold text-secondary">{booking.name}</span><span className="text-center">{getLetterMonth(booking.dateIn, booking.dateOut)} - {booking.dateIn.getDate()} | {booking.dateOut.getDate()}</span></div>
                 <div className="flex flex-col gap-y-0.5 basis-1/6 justify-center py-1 md:py-2">
                   <div className="text-center">{booking.dateIn.getHours()}:{minnIn}</div>

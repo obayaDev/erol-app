@@ -175,7 +175,7 @@ export default function SleepForm(){
       >
         <div className="w-full flex flex-col space-y-4 p-4 rounded-xl">
           <div className="flex flex-row space-x-4">
-            <input name="email" type="email" placeholder='Email' className={`w-2/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6 ${emailValidated ? "text-green-600":"text-red-900"}`} required></input>
+            <input name="email" type="email" placeholder='Email' className={`w-2/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6`} required></input>
             <input name="phone" type="tel" placeholder='Telefon' className="w-1/3 rounded-lg my-auto shadow-md px-2 py-1 max-h-6" required></input>
           </div>
           <div className="flex flex-row space-x-4">
