@@ -6,7 +6,7 @@ export default function LoadingCapsDormir() {
     <>
     <main>
       <div className="text-3xl h-96 w-fit m-auto">
-        <LoadingDots/>
+        <div className="h-fit my-auto"><LoadingDots/></div>
       </div>
     </main>
     </>
