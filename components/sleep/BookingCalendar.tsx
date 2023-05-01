@@ -54,6 +54,16 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
 
       disabledDates.push(...datesToRemove);
       disabledDates.sort((a, b) => a.getTime() - b.getTime());
+      enabledDates.forEach((date) => {
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+      });
+      const enDa = enabledDates.filter(date => !datesToRemove.some((date2 => date2.getTime() === date.getTime())));
+      setEnabledDates(enDa);
+      setStartDate(enabledDates[0]);
+      setEndDate(enabledDates[1]);
       setLoading(false);
     })
   }, []);
@@ -61,17 +71,17 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
   const [startDate, setStartDate] = useState(enabledDates[0]);
   const [endDate, setEndDate] = useState(enabledDates[1]);
 
+  let selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: 'Selection'
+  };
+
   const handleSelect = (ranges:any,) =>{
     setStartDate(ranges.Selection.startDate);
     setEndDate(ranges.Selection.endDate);
     props.setDateIn(ranges.Selection.startDate);
     props.setDateOut(ranges.Selection.endDate);
-  }
-
-  const selectionRange = {
-    startDate: startDate,
-    endDate: endDate,
-    key: 'Selection'
   }
   
   return (
@@ -84,15 +94,13 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
         ) : (
           <DateRangePicker
             className={`rounded-lg overflow-hidden`}
-            ranges={[selectionRange]} 
+            ranges={[selectionRange]}
             minDate={new Date()}
             maxDate={addDays(new Date(), 365)}
             locale={rdrLocales.es}
             onChange={handleSelect}
             moveRangeOnFirstSelection={true}
             showDateDisplay={false}
-            staticRanges={[]}
-            inputRanges={[]}
             disabledDates={disabledDates}
             
           />

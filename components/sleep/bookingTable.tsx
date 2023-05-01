@@ -54,7 +54,7 @@ export default function BookingTable (props:{bookings: BookingType[]}){
   
   return(
     <>
-      <div className="flex flex-col w-full my-10 transition-[height] gap-y-4 max-w-lg">
+      <div className="flex flex-col w-full my-10 transition-[height] gap-y-4 max-w-lg mx-auto lg:mx-0">
 
         <div className="flex flex-row w-full justify-start py-2 rounded-t-3xl rounded-b-xl shadow-xl bg-secondary">
           <div className="flex flex-row basis-2/6 justify-center py-1 md:py-2"><BsCalendarDate className="text-lg my-auto text-accent"/></div>
