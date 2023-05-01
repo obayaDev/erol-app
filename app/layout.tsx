@@ -1,8 +1,9 @@
-import './globals.css'
-import Link from 'next/link'
+import './globals.css';
+import Link from 'next/link';
+import { Analytics } from '@vercel/analytics/react';
 
-import Image from 'next/image'
-import mainLogo from "../public/home/mainLogo.png"
+import Image from 'next/image';
+import mainLogo from "../public/home/mainLogo.png";
 import Toaster from "@/components/toaster";
 
 export const metadata = {
@@ -40,7 +41,7 @@ export default function RootLayout(props:{children: React.ReactNode}) {
         </nav>
         <Toaster/>
         {props.children}
-
+        <Analytics />
       </body>
 
     </html>

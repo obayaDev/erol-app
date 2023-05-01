@@ -68,7 +68,7 @@ export default function BookingTable (props:{bookings: BookingType[]}){
           return(
             <>
             <div className="flex flex-col">
-              <div onClick={() => {setOpen(!open); setOpenKey(key + 1)}} className={`flex flex-row z-10 w-full text-xs md:text-bas py-1 bg-white ${key + 1 === varBookings.length ? "rounded-t-xl rounded-b-3xl":"rounded-xl"} shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
+              <div onClick={() => {setOpen(!open); setOpenKey(key + 1)}} className={`cursor-pointer flex flex-row z-10 w-full text-xs md:text-bas py-1 bg-white ${key + 1 === varBookings.length ? "rounded-t-xl rounded-b-3xl":"rounded-xl"} shadow-lg ${booking.confirmed ? "":"shadow-lg"}`}>
                 <div className="flex flex-col gap-y-0.5 basis-2/6 py-1"><span className="text-center font-semibold text-secondary">{booking.name}</span><span className="text-center">{getLetterMonth(booking.dateIn, booking.dateOut)} - {booking.dateIn.getDate()} | {booking.dateOut.getDate()}</span></div>
                 <div className="flex flex-col gap-y-0.5 basis-1/6 justify-center py-1 md:py-2">
                   <div className="text-center">{booking.dateIn.getHours()}:{minnIn}</div>
