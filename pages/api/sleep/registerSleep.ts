@@ -31,7 +31,9 @@ export default async function handler(
           dateIn,
           dateOut,
           confirmed: false,
-          confirmed_by_id: 0,
+          confirmed_by:{
+            connect: {id: 1}
+          }
         },
       });
       res.status(200).json("ok");

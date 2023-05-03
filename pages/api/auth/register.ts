@@ -13,24 +13,45 @@ export default async function handler(
     },
   });
   if (exists) {
-    res.status(400).send("User already exists");
+    res.status(400).send("L'usuari ja existeix");
   } else {
+
+    let branchId:any
     try{
-      const user = await prisma.user.create({
-        data: {
-          name,
-          firstName,
-          phone,
-          email,
-          password: password, //await hash(password, 10),
-          role,
-          branch
+      branchId = await prisma.branches.findUnique({
+        select:{
+          id: true,
         },
-      });
-      res.status(200).json(user);
+        where:{
+          branch: branch,
+        }
+      })
     }catch(error){
-      throw new Error(`Error: ${error}`);
+      res.status(400).send("No hi ha cap branca enomenada així, ves al editdor de branques.");
     }
+
+    if(branchId){
+      try{
+        const user = await prisma.user.create({
+          data: {
+            name,
+            firstName,
+            phone,
+            email,
+            password: password, //await hash(password, 10),
+            role,
+            branch:{
+              connect: {id: branchId.id},
+            }
+          },
+  
+        });
+        res.status(200).json(user);
+      }catch(error){
+        throw new Error(`Error: ${error}`);
+      }
+    }
+    
     
   }
 }

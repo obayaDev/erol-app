@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "darwin"]
 }
 
@@ -9,84 +9,102 @@ datasource db {
 }
 
 model branches {
-  id         Int    @id @default(autoincrement()) @db.UnsignedInt
-  name       String @db.VarChar(255)
-  branch     String @db.VarChar(15)
-  year_in    Int    @db.Year
-  year_out   Int    @db.Year
-  image_path String @db.VarChar(255)
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  name       String   @unique @db.VarChar(255)
+  branch     String   @unique @db.VarChar(15)
+  year_in    Int      @db.Year
+  year_out   Int      @db.Year
+  image_path String   @db.VarChar(255)
+  User       User[]
+  childs     childs[]
+  events     events[]
+  files      files[]
 }
 
 model childs {
-  id          Int     @id @default(autoincrement()) @db.UnsignedInt
-  name        String  @db.VarChar(255)
-  second_name String  @db.VarChar(255)
-  third_name  String  @db.VarChar(255)
-  year_birth  Int     @db.Year
-  branch      String  @db.VarChar(15)
+  id          Int      @id @default(autoincrement()) @db.UnsignedInt
+  name        String   @db.VarChar(255)
+  second_name String   @db.VarChar(255)
+  third_name  String   @db.VarChar(255)
+  year_birth  Int      @db.Year
+  branchId    Int
   father_id   Int
   mother_id   Int
   absences    Int
   still_in    Boolean
+  branch      branches @relation(fields: [branchesId], references: [id])
+  branchesId  Int      @db.UnsignedInt
 }
 
 model events {
-  id             Int      @id @default(autoincrement()) @db.UnsignedInt
-  date           DateTime @db.DateTime(0)
-  name           String   @db.VarChar(255)
-  text           String   @db.Text
-  branch         String   @db.VarChar(15)
-  type           String   @db.VarChar(25)
-  image_path     String   @db.VarChar(255)
-  uploaded_by_id Int
-  global         Boolean
-  past           Boolean
-  assistence     String   @db.LongText
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  date       DateTime
+  name       String   @db.VarChar(255)
+  text       String   @db.Text
+  branchId   Int
+  type       String   @db.VarChar(25)
+  image_path String   @db.VarChar(255)
+  authorId   Int
+  global     Boolean
+  past       Boolean
+  assistence Json
+  branch     branches @relation(fields: [branchesId], references: [id])
+  branchesId Int      @db.UnsignedInt
 }
 
 model files {
   id              Int      @id @default(autoincrement()) @db.UnsignedInt
   name            String   @db.VarChar(50)
   text            String   @db.Text
-  branch          String   @db.VarChar(15)
-  max_update_date DateTime @db.Date
+  max_update_date DateTime
   file_path       String   @db.VarChar(255)
-  uploaded_by_id  Int
+  global          Boolean
+  branch          branches @relation(fields: [branchesId], references: [id])
+  branchesId      Int      @db.UnsignedInt
+  author          User     @relation(fields: [userId], references: [id])
+  userId          Int
 }
 
 model forms_sleep {
-  id              Int      @id @default(autoincrement()) @db.UnsignedInt
-  name            String
-  firstName       String
-  email           String
-  phone           String
-  group           String
-  comments        String  @db.Text
-  capsQuatitiy    String
-  childQuatitiy   String
-  dateIn          DateTime
-  dateOut         DateTime
-  confirmed       Boolean
-  confirmed_by_id Int
+  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  name          String
+  firstName     String
+  email         String
+  phone         String
+  group         String
+  comments      String   @db.Text
+  capsQuatitiy  String
+  childQuatitiy String
+  dateIn        DateTime
+  dateOut       DateTime
+  confirmed     Boolean
+  confirmed_by  User     @relation(fields: [userId], references: [id])
+  userId        Int
 }
 
 model news {
-  id         Int    @id @default(autoincrement()) @db.UnsignedInt
-  title      String @db.VarChar(255)
-  text       String @db.Text
-  image_path String @db.VarChar(255)
-  user_id    Int
+  id         Int     @id @default(autoincrement()) @db.UnsignedInt
+  title      String  @db.VarChar(255)
+  text       String  @db.Text
+  image_path String  @db.VarChar(255)
+  global     Boolean
+  author     User    @relation(fields: [userId], references: [id])
+  userId     Int
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  firstName String
-  phone     String
-  email     String    @unique
-  password  String
-  role      String    @default("fam")
-  branch    String    
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          Int           @id @default(autoincrement())
+  name        String
+  firstName   String
+  phone       String
+  email       String        @unique
+  password    String
+  role        String        @default("fam")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  branch      branches      @relation(fields: [branchesId], references: [id])
+  branchesId  Int           @db.UnsignedInt
+  forms_sleep forms_sleep[]
+  files       files[]
+  news        news[]
 }

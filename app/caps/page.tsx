@@ -118,7 +118,7 @@ export default function Caps(){
         btnIconClosed={<BsArrowDownCircleFill 
         className="my-auto ml-2"/>} 
         hOpened={62} hClosed={3}
-        path="/noticies"
+        path="/caps/assistencia"
         mainIcon={<BsCardChecklist className="-mt-7 -ml-7 text-3xl w-8 text-blue-600 bg-stone-100 border-2 border-stone-100 rounded-md"/>}
         >
 
