@@ -78,8 +78,8 @@ model forms_sleep {
   dateIn        DateTime
   dateOut       DateTime
   confirmed     Boolean
-  confirmed_by  User     @relation(fields: [userId], references: [id])
-  userId        Int
+  confirmed_by  User?    @relation(fields: [userId], references: [id])
+  userId        Int?
 }
 
 model news {
