@@ -16,7 +16,8 @@ export default function BookingCalendar(props:{setDateIn: Function, setDateOut: 
     var dates = [];
 
     while (date < endDate) {
-        if (!isWeekend(date)) dates.push(new Date(date));
+        if (!isWeekend(date)) 
+        dates.push(new Date(date));
         date.setDate( date.getDate() + 1 );
     }
     return dates;

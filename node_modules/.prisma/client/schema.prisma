@@ -9,15 +9,16 @@ datasource db {
 }
 
 model branches {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  name       String   @unique @db.VarChar(255)
-  branch     String   @unique @db.VarChar(15)
-  year_in    Int      @db.Year
-  year_out   Int      @db.Year
-  image_path String   @db.VarChar(255)
+  id         Int          @id @default(autoincrement()) @db.UnsignedInt
+  name       String       @unique @db.VarChar(255)
+  branch     String       @unique @db.VarChar(15)
+  year_in    Int          @db.Year
+  year_out   Int          @db.Year
+  image_path String       @default("/") @db.VarChar(255)
   User       User[]
+  activities activities[]
   childs     childs[]
-  events     events[]
+  family     family[]
   files      files[]
 }
 
@@ -27,29 +28,38 @@ model childs {
   second_name String   @db.VarChar(255)
   third_name  String   @db.VarChar(255)
   year_birth  Int      @db.Year
-  branchId    Int
-  father_id   Int
-  mother_id   Int
   absences    Int
   still_in    Boolean
-  branch      branches @relation(fields: [branchesId], references: [id])
   branchesId  Int      @db.UnsignedInt
+  familyId    Int      @db.UnsignedInt
+  branch      branches @relation(fields: [branchesId], references: [id])
+  family      family   @relation(fields: [familyId], references: [id])
+
+  @@index([branchesId], map: "childs_branchesId_fkey")
+  @@index([familyId], map: "childs_familyId_fkey")
 }
 
-model events {
+model family {
   id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  date       DateTime
-  name       String   @db.VarChar(255)
-  text       String   @db.Text
-  branchId   Int
-  type       String   @db.VarChar(25)
-  image_path String   @db.VarChar(255)
-  authorId   Int
-  global     Boolean
-  past       Boolean
-  assistence Json
-  branch     branches @relation(fields: [branchesId], references: [id])
   branchesId Int      @db.UnsignedInt
+  User       User[]
+  childs     childs[]
+  branch     branches @relation(fields: [branchesId], references: [id])
+
+  @@index([branchesId], map: "family_branchesId_fkey")
+}
+
+model activities {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  date       DateTime
+  name       String    @db.VarChar(75)
+  fileDate   DateTime?
+  filePath   String?   @db.Text
+  assistence Json
+  branchesId Int       @db.UnsignedInt
+  branch     branches  @relation(fields: [branchesId], references: [id])
+
+  @@index([branchesId], map: "activities_branchesId_fkey")
 }
 
 model files {
@@ -58,28 +68,33 @@ model files {
   text            String   @db.Text
   max_update_date DateTime
   file_path       String   @db.VarChar(255)
-  global          Boolean
-  branch          branches @relation(fields: [branchesId], references: [id])
   branchesId      Int      @db.UnsignedInt
-  author          User     @relation(fields: [userId], references: [id])
+  global          Boolean
   userId          Int
+  branch          branches @relation(fields: [branchesId], references: [id])
+  author          User     @relation(fields: [userId], references: [id])
+
+  @@index([branchesId], map: "files_branchesId_fkey")
+  @@index([userId], map: "files_userId_fkey")
 }
 
 model forms_sleep {
   id            Int      @id @default(autoincrement()) @db.UnsignedInt
   name          String
-  firstName     String
-  email         String
-  phone         String
-  group         String
-  comments      String   @db.Text
   capsQuatitiy  String
   childQuatitiy String
+  comments      String   @db.Text
+  confirmed     Boolean
   dateIn        DateTime
   dateOut       DateTime
-  confirmed     Boolean
-  confirmed_by  User?    @relation(fields: [userId], references: [id])
+  email         String
+  firstName     String
+  group         String
+  phone         String
   userId        Int?
+  confirmed_by  User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "forms_sleep_userId_fkey")
 }
 
 model news {
@@ -88,23 +103,30 @@ model news {
   text       String  @db.Text
   image_path String  @db.VarChar(255)
   global     Boolean
-  author     User    @relation(fields: [userId], references: [id])
   userId     Int
+  author     User    @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "news_userId_fkey")
 }
 
 model User {
   id          Int           @id @default(autoincrement())
   name        String
-  firstName   String
-  phone       String
   email       String        @unique
-  password    String
-  role        String        @default("fam")
   createdAt   DateTime      @default(now())
+  firstName   String
+  password    String
+  phone       String
+  role        String        @default("fam")
   updatedAt   DateTime      @updatedAt
-  branch      branches      @relation(fields: [branchesId], references: [id])
   branchesId  Int           @db.UnsignedInt
-  forms_sleep forms_sleep[]
+  familyId    Int?          @db.UnsignedInt
+  branch      branches      @relation(fields: [branchesId], references: [id])
+  family      family?       @relation(fields: [familyId], references: [id])
   files       files[]
+  forms_sleep forms_sleep[]
   news        news[]
+
+  @@index([branchesId], map: "User_branchesId_fkey")
+  @@index([familyId], map: "User_familyId_fkey")
 }

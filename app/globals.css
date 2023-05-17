@@ -19,3 +19,11 @@
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+*:focus {
+  outline: none;
+}
